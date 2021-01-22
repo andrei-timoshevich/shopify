@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: shopify
+  liquibase:
+    enabled: false
+  datasource:
+    #    url: jdbc:mysql://${db_host}/${db_name}?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://${DATABASE_HOST:localhost}:${DATABASE_PORT:3306}/${DATABASE_NAME:ecommerce}?createDatabaseIfNotExist=true&useSSL=false&useUnicode=true&characterEncoding=utf8
+    username: ${db_username:root}
+    password: ${db_password:root}
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          ddl: true
+          auto: update
+
+shopify:
+  api:
+    url: https://shopify.com/
