@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody
 interface ProductClient {
 
     @GetMapping("/admin/api/2021-01/products/count.json")
-    fun getCountOfProducts(@RequestBody filter: String = COUNT_FILTER): Long
+    fun getCountOfProducts(@RequestBody filter: String = PUBLISHED_STATUS_FILTER): Long
 
     @GetMapping("/admin/api/2021-01/products/{productId}.json")
-    fun getSingleProduct(@PathVariable productId: Long): Product
+    fun getSingleProduct(@PathVariable productId: Long): Product?
 
     @GetMapping("/admin/api/2021-01/products.json")
     fun getProducts(@RequestBody request: GetProductRequest): List<Product?>?
 
     companion object {
-        private const val COUNT_FILTER = """"{"published_status" : "published"}"""
+        private const val PUBLISHED_STATUS_FILTER = """"{"published_status" : "published"}"""
     }
 }

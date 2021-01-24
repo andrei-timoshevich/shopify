@@ -1,6 +1,7 @@
 package com.ecommerce.shopify.remote
 
 import com.ecommerce.shopify.config.interceptor.ShopifyCredentialsInterceptor
+import com.ecommerce.shopify.model.product.GraphQLProductData
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -13,5 +14,5 @@ import org.springframework.web.bind.annotation.RequestBody
 interface GraphQLClient {
 
     @PostMapping("/admin/api/2021-01/graphql.json", consumes = ["application/graphql"])
-    fun findProducts(@RequestBody query: String): String
+    fun findProducts(@RequestBody query: String): GraphQLProductData?
 }

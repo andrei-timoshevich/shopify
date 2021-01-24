@@ -9,5 +9,5 @@ import java.net.URI
 interface CredentialsClient {
 
     @GetMapping("/admin/api/2021-01/shop.json")
-    fun validateCredentials(@RequestHeader authorizationHeader: Map<String, String>, baseUrl: URI): String
+    fun ping(@RequestHeader header: Map<String, String>, baseUrl: URI): String
 }

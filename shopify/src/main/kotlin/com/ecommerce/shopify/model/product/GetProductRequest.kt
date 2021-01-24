@@ -8,7 +8,7 @@ import java.io.Serializable
 
 @JsonInclude(NON_EMPTY)
 data class GetProductRequest(
-    @get:JsonSerialize(using = IdsSerializer::class)
-    var ids: Set<Long>? = null,
-    var limit: Int? = null
+        @get:JsonSerialize(using = IdsSerializer::class)
+        var ids: Set<Long>? = null,
+        var limit: Int? = null
 ) : Serializable

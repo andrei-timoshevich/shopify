@@ -20,6 +20,7 @@ class ProductController(private val productService: ProductService) {
     @GetMapping("/import/{id}")
     fun importProduct(@PathVariable id: Long) = productService.importProduct(id)
 
+    //todo add pagination
     @PostMapping("/search")
     fun searchProduct(@RequestParam title: String) = productService.searchProductByTitle(title)
 }

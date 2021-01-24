@@ -2,26 +2,35 @@ package com.ecommerce.shopify.service
 
 import com.ecommerce.shopify.model.Credentials
 import com.ecommerce.shopify.remote.CredentialsClient
+import com.ecommerce.shopify.repository.CredentialsRepository
+import com.ecommerce.shopify.utils.AUTHORIZATION_HEADER
+import com.ecommerce.shopify.utils.authorizationHeaderValue
+import com.ecommerce.shopify.utils.createURI
+import feign.FeignException
 import org.springframework.stereotype.Service
-import org.springframework.util.Base64Utils
-import java.net.URI
 
 @Service
-class StoreService(private val credentialsClient: CredentialsClient) {
+class StoreService(private val credentialsClient: CredentialsClient,
+                   private val credentialsRepository: CredentialsRepository) {
 
     fun validateCredentials(credentials: Credentials) {
-        credentials.run {
-            credentialsClient.validateCredentials(
-                mapOf(AUTHORIZATION_HEADER to authorizationValue(apiKey, password)),
-                this.createURI()
-            )
+        try {
+            pingStoreWithCredentials(credentials)
+        } catch (ex: FeignException) {
+            //todo
         }
     }
 
-    companion object {
-        private const val AUTHORIZATION_HEADER = "Authorization"
-        private fun Credentials.createURI() = URI("https://$store.myshopify.com")
-        private fun authorizationValue(apiKey: String, password: String) =
-            "Basic " + Base64Utils.encodeToString("$apiKey:$password".toByteArray())
+    fun saveCredentials(credentials: Credentials) {
+        validateCredentials(credentials)
+        credentialsRepository.save(credentials)
     }
+
+    private fun pingStoreWithCredentials(credentials: Credentials) =
+            credentials.run {
+                credentialsClient.ping(
+                        mapOf(AUTHORIZATION_HEADER to authorizationHeaderValue(apiKey, password)),
+                        this.createURI()
+                )
+            }
 }

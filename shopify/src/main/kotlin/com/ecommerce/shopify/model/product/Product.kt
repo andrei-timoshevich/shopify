@@ -22,20 +22,20 @@ import javax.persistence.OneToMany
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Product(
 
-    @get:JsonAlias("product_id")
-    var productId: Long? = null,
-    @ElementCollection
-    @set:JsonDeserialize(using = TagDeserializer::class)
-    var tags: Set<String?>? = null,
-    var title: String? = null,
-    var vendor: String? = null,
-    @OneToMany(cascade = [ALL], orphanRemoval = true)
-    var variants: Set<ProductVariant>? = null,
-    @set:JsonDeserialize(using = ImageDeserializer::class)
-    var image: String? = null,
-    @Transient
-    @get:JsonIgnore
-    @set:JsonDeserialize(using = ImagesDeserializer::class)
-    var images: Map<Long?, String?>? = null
+        @get:JsonAlias("product_id")
+        var productId: Long? = null,
+        @ElementCollection
+        @set:JsonDeserialize(using = TagDeserializer::class)
+        var tags: List<String?>? = null,
+        var title: String? = null,
+        var vendor: String? = null,
+        @OneToMany(cascade = [ALL], orphanRemoval = true)
+        var variants: Set<ProductVariant>? = null,
+        @set:JsonDeserialize(using = ImageDeserializer::class)
+        var image: String? = null,
+        @Transient
+        @get:JsonIgnore
+        @set:JsonDeserialize(using = ImagesDeserializer::class)
+        var images: Map<Long?, String?>? = null
 
 ) : BaseGuidEntity()
